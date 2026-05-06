@@ -7,13 +7,12 @@
 
 <style>
 :root{
-  /* 🔥 الخلفية من هنا */
   --site-bg:url("https://media.discordapp.net/attachments/1348444582072815736/1403823522106703893/Mars-Planet-Rotation.webp?ex=69fc4049&is=69faeec9&hm=954431e5f9c96b9aaa1390a9bdb0b2aaac601b056f6ad21d773bc2b6959a661b&=&animated=true&width=1121&height=630");
+  
+  /* 🟠 اللون الجديد */
+  --main:#ff6a00;
 
-  /* 🌑 درجة التعتيم */
   --overlay:rgba(0,0,0,0.55);
-
-  --main:#a020f0;
 }
 
 body{
@@ -24,7 +23,6 @@ color:white;
 position:relative;
 }
 
-/* طبقة التعتيم */
 body::before{
 content:'';
 position:fixed;
@@ -77,7 +75,7 @@ padding:15px;
 border-radius:12px;
 width:220px;
 text-align:center;
-border:1px solid rgba(160,32,240,0.3);
+border:1px solid rgba(255,106,0,0.3);
 }
 
 .card img{
@@ -100,8 +98,8 @@ padding:10px;
 border:none;
 border-radius:8px;
 cursor:pointer;
-background:white;
-color:black;
+background:var(--main);
+color:white;
 margin:5px;
 }
 
@@ -131,7 +129,6 @@ margin:auto;
 
 <body>
 
-<!-- القائمة -->
 <nav>
 <a onclick="show('home')">الرئيسية</a>
 <a onclick="show('store')">المتجر</a>
@@ -139,7 +136,6 @@ margin:auto;
 <a onclick="show('admin')">الإدارة</a>
 </nav>
 
-<!-- تسجيل -->
 <div id="loginBox" style="
 position:fixed;inset:0;background:#000;
 display:flex;flex-direction:column;
@@ -151,10 +147,9 @@ z-index:9999;
 <button onclick="saveUser()">دخول</button>
 </div>
 
-<!-- الرئيسية -->
 <section id="home" class="active">
 
-<h1 style="text-align:center;color:#a020f0;">Mars Community</h1>
+<h1 style="text-align:center;color:var(--main);">Mars Community</h1>
 
 <p style="text-align:center;">
 المستخدم: <span id="currentUser"></span>
@@ -162,18 +157,23 @@ z-index:9999;
 
 <div class="banner"></div>
 
+<!-- 🔥 زر الدسكورد -->
+<div style="text-align:center;">
+<button onclick="joinDiscord()">انضم إلى الدسكورد</button>
+</div>
+
 <h2 style="text-align:center;">المسؤولين</h2>
 
 <div class="flex">
 
 <div class="card">
-<img src="https://i.imgur.com/your-logo1.png">
+<img src="https://cdn.discordapp.com/attachments/1490113151599903003/1501548429443207258/IMG_7286.jpg?ex=69fc7973&is=69fb27f3&hm=6ab524b438d7fcee8fb71459e69d71d4a8585cc82014bc0aed493810b37a146e&">
 <h3>Fafa</h3>
 <p>Owner</p>
 </div>
 
 <div class="card">
-<img src="https://i.imgur.com/your-logo2.png">
+<img src="https://media.discordapp.net/attachments/1490113151599903003/1501548429120372777/IMG_7381.jpg?ex=69fc7972&is=69fb27f2&hm=6942066ce6bca7b5936e89fb61815fd6e06abf2bc6873af3f2081e819c34dd48&=&format=webp&width=597&height=630">
 <h3>Eleven</h3>
 <p>Developer</p>
 </div>
@@ -182,33 +182,31 @@ z-index:9999;
 
 </section>
 
-<!-- المتجر -->
 <section id="store">
 
-<h2 style="text-align:center;color:#a020f0;">المتجر</h2>
+<h2 style="text-align:center;color:var(--main);">المتجر</h2>
 
 <div class="flex">
 
 <div class="card">
 <h3>رتبة ماثيو</h3>
 <p>10000 Credit</p>
-<button onclick="order('رتبة ماثيو')">طلب</button>
+<button onclick="order('رتبة ماثيو')">طلب عبر الدسكورد</button>
 </div>
 
 <div class="card">
 <h3>كافح المكافح</h3>
 <p>10000 Credit</p>
-<button onclick="order('كافح المكافح')">طلب</button>
+<button onclick="order('كافح المكافح')">طلب عبر الدسكورد</button>
 </div>
 
 </div>
 
 </section>
 
-<!-- الشات -->
 <section id="chat">
 
-<h2 style="text-align:center;color:#a020f0;">الشات</h2>
+<h2 style="text-align:center;color:var(--main);">الشات</h2>
 
 <div id="chatBox"></div>
 
@@ -219,10 +217,9 @@ z-index:9999;
 
 </section>
 
-<!-- الإدارة -->
 <section id="admin">
 
-<h2 style="text-align:center;color:#a020f0;">لوحة الإدارة</h2>
+<h2 style="text-align:center;color:var(--main);">لوحة الإدارة</h2>
 
 <div style="text-align:center;">
 
@@ -272,9 +269,14 @@ document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
+/* 🔥 زر الدسكورد */
+function joinDiscord(){
+window.open("https://discord.gg/9GrVAxB7xY","_blank");
+}
+
 /* طلب */
 function order(item){
-window.open("https://discord.com","_blank");
+window.open("https://discord.gg/9GrVAxB7xY","_blank");
 alert("تم طلب: "+item);
 }
 
