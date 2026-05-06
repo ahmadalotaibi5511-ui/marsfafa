@@ -1,93 +1,341 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mars Community</title>
-</head>
 
-<body style="
+<style>
+:root{
+  /* 🔥 الخلفية من هنا */
+  --site-bg:url("https://media.discordapp.net/attachments/1348444582072815736/1403823522106703893/Mars-Planet-Rotation.webp?ex=69fc4049&is=69faeec9&hm=954431e5f9c96b9aaa1390a9bdb0b2aaac601b056f6ad21d773bc2b6959a661b&=&animated=true&width=1121&height=630");
+
+  /* 🌑 درجة التعتيم */
+  --overlay:rgba(0,0,0,0.55);
+
+  --main:#a020f0;
+}
+
+body{
 margin:0;
 font-family:Arial;
-background:url('https://media.discordapp.net/attachments/1348444582072815736/1403823522106703893/Mars-Planet-Rotation.webp?ex=69faeec9&is=69f99d49&hm=5034d4776cbee9f3e92711afe5af9bccf0c0b79e99076138941d2c36a8a8599b&=&animated=true&width=1121&height=630') no-repeat center center/cover;
+background:var(--site-bg) center/cover no-repeat fixed;
 color:white;
-text-align:center;
-">
+position:relative;
+}
 
-<!-- الصفحة الرئيسية -->
-<div style="
-background:rgba(0,0,0,0.7);
-height:100vh;
+/* طبقة التعتيم */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:var(--overlay);
+z-index:0;
+}
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+background:#111;
 display:flex;
-flex-direction:column;
 justify-content:center;
-align-items:center;
+gap:10px;
+padding:12px;
+z-index:999;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+padding:8px 15px;
+background:#222;
+border-radius:8px;
+cursor:pointer;
+}
+
+section{
+padding:100px 20px;
+display:none;
+min-height:100vh;
+position:relative;
+z-index:1;
+}
+
+.active{display:block;}
+
+.flex{
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.card{
+background:rgba(0,0,0,0.6);
+padding:15px;
+border-radius:12px;
+width:220px;
+text-align:center;
+border:1px solid rgba(160,32,240,0.3);
+}
+
+.card img{
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.banner{
+width:100%;
+height:200px;
+background:rgba(255,255,255,0.05);
+border-radius:15px;
+margin:20px 0;
+}
+
+button{
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:white;
+color:black;
+margin:5px;
+}
+
+input{
+padding:10px;
+border-radius:8px;
+border:none;
+margin:5px;
+width:200px;
+}
+
+.post{
+background:rgba(0,0,0,0.6);
+margin:8px 0;
+padding:10px;
+border-radius:10px;
+}
+
+.post b{color:var(--main);}
+
+#chatBox{
+max-width:600px;
+margin:auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- القائمة -->
+<nav>
+<a onclick="show('home')">الرئيسية</a>
+<a onclick="show('store')">المتجر</a>
+<a onclick="show('chat')">الشات</a>
+<a onclick="show('admin')">الإدارة</a>
+</nav>
+
+<!-- تسجيل -->
+<div id="loginBox" style="
+position:fixed;inset:0;background:#000;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+z-index:9999;
 ">
+<h2>اختر اسم مستخدم</h2>
+<input id="setUser" placeholder="اسم المستخدم">
+<button onclick="saveUser()">دخول</button>
+</div>
 
-<h1 style="font-size:50px;color:#ff4d4d;"> Mars Community</h1>
+<!-- الرئيسية -->
+<section id="home" class="active">
 
-<p style="font-size:20px;">
-هو مجتمع ديسكورد يهدف إلى جمع الأعضاء في مكان واحد للتفاعل، قضاء وقت ممتع، والمشاركة في فعاليات وألعاب متنوعة. نوفر بيئة هادئة وآمنة للجميع، مع اهتمام خاص بالتنظيم والمحتوى الممتع.
+<h1 style="text-align:center;color:#a020f0;">Mars Community</h1>
+
+<p style="text-align:center;">
+المستخدم: <span id="currentUser"></span>
 </p>
 
-<a href="https://discord.com/invite/dZCmSMGHBC" target="_blank"
-style="
-padding:15px 30px;
-background:#fefefe;
-color:rgb(0, 0, 0);
-text-decoration:none;
-border-radius:10px;
-font-size:18px;
-margin-top:20px;
-">
-Join Discord
-</a>
+<div class="banner"></div>
 
-</div>
+<h2 style="text-align:center;">المسؤولين</h2>
 
-<!-- قسم الفريق -->
-<div style="
-background:#111;
-padding:50px 20px;
-">
+<div class="flex">
 
-<h2 style="font-size:35px;color:#ff4d4d;">المسؤولين</h2>
-
-<div style="
-display:flex;
-justify-content:center;
-gap:40px;
-flex-wrap:wrap;
-margin-top:30px;
-">
-
-<!-- الشخص الأول -->
-<div style="
-background:#1a1a1a;
-padding:20px;
-border-radius:15px;
-width:250px;
-">
-<img src="https://media.discordapp.net/attachments/1490113151599903003/1500763992623153162/IMG_7286.jpg?ex=69faf062&is=69f99ee2&hm=bb52ff14e827a41f3a15c77c38de841a5f97560fa268e22b4007964de05ed837&=&format=webp&width=600&height=600" style="border-radius:50%; width:120px;">
+<div class="card">
+<img src="https://i.imgur.com/your-logo1.png">
 <h3>Fafa</h3>
-<p>Onwer</p>
+<p>Owner</p>
 </div>
 
-<!-- الشخص الثاني -->
-<div style="
-background:#1a1a1a;
-padding:20px;
-border-radius:15px;
-width:250px;
-">
-<img src="https://media.discordapp.net/attachments/1490113151599903003/1501168717072171099/IMG_7381.jpg?ex=69fb17d0&is=69f9c650&hm=7a48dd1d5a0b24bcdd09ea70b667fc71fcf7333a3fad0b979bebb132dc2c021b&=&format=webp&width=746&height=786" style="border-radius:50%; width:120px;">
+<div class="card">
+<img src="https://i.imgur.com/your-logo2.png">
 <h3>Eleven</h3>
-<p>Devolper</p>
+<p>Developer</p>
 </div>
 
 </div>
 
+</section>
+
+<!-- المتجر -->
+<section id="store">
+
+<h2 style="text-align:center;color:#a020f0;">المتجر</h2>
+
+<div class="flex">
+
+<div class="card">
+<h3>رتبة ماثيو</h3>
+<p>10000 Credit</p>
+<button onclick="order('رتبة ماثيو')">طلب</button>
 </div>
+
+<div class="card">
+<h3>كافح المكافح</h3>
+<p>10000 Credit</p>
+<button onclick="order('كافح المكافح')">طلب</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- الشات -->
+<section id="chat">
+
+<h2 style="text-align:center;color:#a020f0;">الشات</h2>
+
+<div id="chatBox"></div>
+
+<div style="text-align:center;">
+<input id="msg" placeholder="اكتب رسالة">
+<button onclick="send()">إرسال</button>
+</div>
+
+</section>
+
+<!-- الإدارة -->
+<section id="admin">
+
+<h2 style="text-align:center;color:#a020f0;">لوحة الإدارة</h2>
+
+<div style="text-align:center;">
+
+<input id="target" placeholder="اسم المستخدم">
+<input id="pass" placeholder="كلمة السر">
+
+<br>
+
+<button onclick="ban()">Ban</button>
+<button onclick="timeout()">Timeout 60s</button>
+<button onclick="clearChat()">مسح الشات</button>
+
+<p id="status"></p>
+
+</div>
+
+</section>
+
+<script>
+
+const PASS="fafa123";
+
+/* تسجيل */
+function saveUser(){
+let u=document.getElementById("setUser").value;
+if(!u) return;
+
+localStorage.setItem("user",u);
+document.getElementById("loginBox").style.display="none";
+document.getElementById("currentUser").innerText=u;
+}
+
+window.onload=function(){
+let u=localStorage.getItem("user");
+
+if(u){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("currentUser").innerText=u;
+}
+
+document.getElementById("chatBox").innerHTML=localStorage.getItem("chat")||"";
+}
+
+/* تنقل */
+function show(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* طلب */
+function order(item){
+window.open("https://discord.com","_blank");
+alert("تم طلب: "+item);
+}
+
+/* شات */
+function send(){
+
+let user=localStorage.getItem("user");
+let msg=document.getElementById("msg").value;
+if(!msg) return;
+
+let box=document.getElementById("chatBox");
+
+let div=document.createElement("div");
+div.className="post";
+div.innerHTML="<b>"+user+":</b> "+msg;
+
+box.appendChild(div);
+
+localStorage.setItem("chat",box.innerHTML);
+
+document.getElementById("msg").value="";
+}
+
+/* Ban */
+function ban(){
+let u=document.getElementById("target").value;
+let p=document.getElementById("pass").value;
+if(p!==PASS)return alert("خطأ");
+
+let b=JSON.parse(localStorage.getItem("ban")||"[]");
+if(!b.includes(u)) b.push(u);
+
+localStorage.setItem("ban",JSON.stringify(b));
+
+document.getElementById("status").innerText="Ban: "+u;
+}
+
+/* Timeout */
+function timeout(){
+let u=document.getElementById("target").value;
+let p=document.getElementById("pass").value;
+if(p!==PASS)return alert("خطأ");
+
+let t=JSON.parse(localStorage.getItem("timeout")||"{}");
+t[u]=Date.now()+60000;
+
+localStorage.setItem("timeout",JSON.stringify(t));
+
+document.getElementById("status").innerText="Timeout: "+u;
+}
+
+/* مسح */
+function clearChat(){
+let p=document.getElementById("pass").value;
+if(p!==PASS)return alert("خطأ");
+
+localStorage.removeItem("chat");
+document.getElementById("chatBox").innerHTML="";
+}
+
+</script>
 
 </body>
 </html>
